@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Leadership Analysis: Sankofa Digital Solutions</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+    body, html {
+        margin: 0;
+        padding: 0;
+        font-family: 'Open Sans', sans-serif;
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+    }
+    .presentation-container {
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+        background-color: #000;
+    }
+    .slide {
+        display: none;
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        top: 0;
+        left: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        background-color: white;
+    }
+    .slide.active {
+        display: flex;
+        flex-direction: column;
+    }
+    .slide-container {
+        width: 100%;
+        min-height: 100vh;
+        overflow: hidden;
+        position: relative;
+        margin: 0 auto;
+        padding: 2vh 2vw;
+    }
+    .title {
+        font-family: 'Montserrat', sans-serif;
+        color: #0a3d62;
+    }
+    .subtitle {
+        font-family: 'Open Sans', sans-serif;
+        color: rgba(255, 255, 255, 0.9);
+    }
+    .footer-text {
+        color: rgba(255, 255, 255, 0.7);
+    }
+    .accent-bar {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 8vw;
+        height: 100vh;
+        background-color: #3498db;
+    }
+    .content-wrapper {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+    }
+    .course-badge {
+        background-color: #3498db;
+        padding: 0.8vh 1.5vw;
+        border-radius: 4px;
+        display: inline-block;
+    }
+    .objective-box {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-left: 4px solid #3498db;
+    }
+    .section-title {
+        font-family: 'Montserrat', sans-serif;
+        color: #0a3d62;
+        border-bottom: 2px solid #3498db;
+        display: inline-block;
+        padding-bottom: 4px;
+    }
+    .company-box, .trigger-box {
+        padding: 2vh 2vw;
+        margin-bottom: 2vh;
+    }
+    .company-box {
+        background-color: #f8f9fa;
+        border-left: 4px solid #3498db;
+    }
+    .trigger-box {
+        background-color: #f8f9fa;
+        border-left: 4px solid #e74c3c;
+    }
+    .symptoms-item {
+        position: relative;
+        padding-left: 20px;
+        margin-bottom: 1vh;
+    }
+    .core-issue-box {
+        background-color: #0a3d62;
+        color: white;
+        padding: 2vh 2vw;
+    }
+    .header-accent {
+        height: 1vh;
+        background-color: #3498db;
+        width: 100%;
+    }
+    .leadership-card, .style-card, .outcome-card, .ei-card, .phase-card {
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        min-height: fit-content;
+        height: auto;
+    }
+    .leadership-card.coercive {
+        border-top: 5px solid #e74c3c;
+    }
+    .leadership-card.pacesetting {
+        border-top: 5px solid #f39c12;
+    }
+    .leadership-card.democratic {
+        border-top: 5px solid #2ecc71;
+    }
+    .leadership-card.affiliative {
+        border-top: 5px solid #9b59b6;
+    }
+    .card-header {
+        padding: 1.5vh 1.5vw;
+    }
+    .card-header.coercive {
+        background-color: rgba(231, 76, 60, 0.1);
+    }
+    .card-header.pacesetting {
+        background-color: rgba(243, 156, 18, 0.1);
+    }
+    .card-header.democratic {
+        background-color: rgba(46, 204, 113, 0.1);
+    }
+    .card-header.affiliative {
+        background-color: rgba(155, 89, 182, 0.1);
+    }
+    .evidence-item {
+        position: relative;
+        padding-left: 20px;
+        margin-bottom: 1vh;
+    }
+    .coercive-text {
+        color: #e74c3c;
+    }
+    .pacesetting-text {
+        color: #f39c12;
+    }
+    .democratic-text {
+        color: #2ecc71;
+    }
+    .affiliative-text {
+        color: #9b59b6;
+    }
+    .style-card.authoritative {
+        border-top: 5px solid #3498db;
+    }
+    .style-card.coaching {
+        border-top: 5px solid #27ae60;
+    }
+    .card-header.authoritative {
+        background-color: rgba(52, 152, 219, 0.1);
+    }
+    .card-header.coaching {
+        background-color: rgba(39, 174, 96, 0.1);
+    }
+    .benefit-item {
+        position: relative;
+        padding-left: 20px;
+        margin-bottom: 1vh;
+    }
+    .effect-badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-right: 6px;
+        margin-bottom: 6px;
+    }
+    .effect-badge.authoritative {
+        background-color: rgba(52, 152, 219, 0.2);
+        color: #2980b9;
+    }
+    .effect-badge.coaching {
+        background-color: rgba(39, 174, 96, 0.2);
+        color: #27ae60;
+    }
+    .divider {
+        width: 80%;
+        height: 2px;
+        margin: 2vh auto;
+    }
+    .divider.authoritative {
+        background-color: rgba(52, 152, 219, 0.3);
+    }
+    .divider.coaching {
+        background-color: rgba(39, 174, 96, 0.3);
+    }
+    .climate-matrix {
+        border-collapse: separate;
+        border-spacing: 0;
+        width: 100%;
+        font-size: clamp(9px, 1vw, 11px);
+    }
+    .matrix-header {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        color: white;
+        background-color: #0a3d62;
+        height: auto;
+        min-height: 50px;
+        text-align: center;
+        padding: 1vh 0.5vw;
+        font-size: clamp(10px, 1.1vw, 12px);
+    }
+    .style-header {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        text-align: left;
+        padding: 1vh 1vw;
+        min-width: 120px;
+        font-size: clamp(9px, 1vw, 11px);
+    }
+    .style-header.coercive {
+        color: #e74c3c;
+        border-left: 4px solid #e74c3c;
+    }
+    .style-header.pacesetting {
+        color: #f39c12;
+        border-left: 4px solid #f39c12;
+    }
+    .style-header.democratic {
+        color: #2ecc71;
+        border-left: 4px solid #2ecc71;
+    }
+    .style-header.affiliative {
+        color: #9b59b6;
+        border-left: 4px solid #9b59b6;
+    }
+    .impact-cell {
+        text-align: left;
+        vertical-align: top;
+        padding: 1vh 0.5vw;
+        border: 1px solid #e5e7eb;
+        min-height: 100px;
+        height: auto;
+    }
+    .impact-indicator {
+        font-size: clamp(14px, 1.5vw, 16px);
+        margin-bottom: 4px;
+        font-weight: bold;
+    }
+    .negative-high {
+        color: #e74c3c;
+    }
+    .negative-medium {
+        color: #f39c12;
+    }
+    .negative-low {
+        color: #f1c40f;
+    }
+    .neutral {
+        color: #7f8c8d;
+    }
+    .distorted {
+        color: #e67e22;
+    }
+    .impact-text {
+        font-size: clamp(9px, 0.9vw, 10px);
+        line-height: 1.4;
+    }
+    .legend-item {
+        display: flex;
+        align-items: center;
+        margin-right: 20px;
+    }
+    .legend-icon {
+        margin-right: 5px;
+        font-weight: bold;
+    }
+    .outcome-card.delays {
+        border-top: 5px solid #e74c3c;
+    }
+    .outcome-card.morale {
+        border-top: 5px solid #f39c12;
+    }
+    .outcome-card.coordination {
+        border-top: 5px solid #27ae60;
+    }
+    .card-header.delays {
+        background-color: rgba(231, 76, 60, 0.1);
+    }
+    .card-header.morale {
+        background-color: rgba(243, 156, 18, 0.1);
+    }
+    .card-header.coordination {
+        background-color: rgba(39, 174, 96, 0.1);
+    }
+    .ei-card.social {
+        border-top: 5px solid #3498db;
+    }
+    .ei-card.self-management {
+        border-top: 5px solid #f39c12;
+    }
+    .ei-card.awareness {
+        border-top: 5px solid #e74c3c;
+    }
+    .card-header.social {
+        background-color: rgba(52, 152, 219, 0.1);
+    }
+    .card-header.self-management {
+        background-color: rgba(243, 156, 18, 0.1);
+    }
+    .card-header.awareness {
+        background-color: rgba(231, 76, 60, 0.1);
+    }
+    .recommendation-box {
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2vh;
+        padding: 2vh 2vw;
+    }
+    .recommendation-box.ceo {
+        border-left: 5px solid #3498db;
+        background-color: rgba(52, 152, 219, 0.05);
+    }
+    .recommendation-box.cto {
+        border-left: 5px solid #27ae60;
+        background-color: rgba(39, 174, 96, 0.05);
+    }
+    .recommendation-box.hr {
+        border-left: 5px solid #f39c12;
+        background-color: rgba(243, 156, 18, 0.05);
+    }
+    .phase-card.immediate {
+        border-top: 5px solid #e74c3c;
+    }
+    .phase-card.short-term {
+        border-top: 5px solid #f39c12;
+    }
+    .phase-card.mid-term {
+        border-top: 5px solid #27ae60;
+    }
+    .card-header.immediate {
+        background-color: rgba(231, 76, 60, 0.1);
+    }
+    .card-header.short-term {
+        background-color: rgba(243, 156, 18, 0.1);
+    }
+    .card-header.mid-term {
+        background-color: rgba(39, 174, 96, 0.1);
+    }
+    .outcomes-box {
+        background-color: rgba(52, 152, 219, 0.05);
+        border-left: 5px solid #3498db;
+        padding: 3vh 3vw;
+    }
+    .references-box {
+        background-color: #f8f9fa;
+        border-left: 5px solid #3498db;
+        padding: 3vh 3vw;
+    }
+    .nav-controls {
+        position: fixed;
+        bottom: 2vh;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        display: flex;
+        gap: 1vw;
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 1vh 2vw;
+        border-radius: 25px;
+    }
+    .nav-btn {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 1vh 2vw;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: clamp(12px, 1.2vw, 14px);
+        font-weight: 600;
+    }
+    .nav-btn:hover {
+        background-color: #2980b9;
+    }
+    .nav-btn:disabled {
+        background-color: #7f8c8d;
+        cursor: not-allowed;
+    }
+    .slide-counter {
+        color: white;
+        padding: 1vh 1.5vw;
+        font-size: clamp(12px, 1.2vw, 14px);
+        display: flex;
+        align-items: center;
+    }
+    
+    /* Responsive Typography */
+    h1 {
+        font-size: clamp(24px, 4vw, 48px);
+    }
+    h2 {
+        font-size: clamp(18px, 2.5vw, 32px);
+    }
+    p, li {
+        font-size: clamp(12px, 1.5vw, 16px);
+    }
+    .text-sm {
+        font-size: clamp(11px, 1.3vw, 14px) !important;
+    }
+    .text-base {
+        font-size: clamp(13px, 1.6vw, 16px) !important;
+    }
+    .text-lg {
+        font-size: clamp(16px, 2vw, 20px) !important;
+    }
+    .text-xl {
+        font-size: clamp(18px, 2.5vw, 24px) !important;
+    }
+    .text-2xl {
+        font-size: clamp(20px, 3vw, 32px) !important;
+    }
+    .text-3xl {
+        font-size: clamp(24px, 4vw, 36px) !important;
+    }
+    .text-5xl {
+        font-size: clamp(32px, 6vw, 60px) !important;
+    }
+    
+    /* Responsive Grid */
+    @media (max-width: 768px) {
+        .grid {
+            grid-template-columns: 1fr !important;
+        }
+        .flex.flex-1 {
+            flex-direction: column !important;
+        }
+        .w-1\/2 {
+            width: 100% !important;
+        }
+        .slide-container {
+            padding: 1vh 3vw;
+        }
+        .accent-bar {
+            width: 5vw;
+        }
+        .nav-controls {
+            flex-direction: column;
+            gap: 0.5vh;
+            padding: 1.5vh 3vw;
+        }
+    }
+    
+    @media (max-width: 1024px) {
+        .grid-cols-3 {
+            grid-template-columns: 1fr !important;
+        }
+        .grid-cols-2 {
+            grid-template-columns: 1fr !important;
+        }
+    }
+    
+    /* Ensure text visibility */
+    .text-gray-700, .text-gray-800 {
+        color: #1f2937 !important;
+    }
+    .text-gray-600 {
+        color: #4b5563 !important;
+    }
+    .text-gray-500 {
+        color: #6b7280 !important;
+    }
+</style>
+</head>
+<body>
+<div class="presentation-container">
+    <!-- Slide 1: Title -->
+    <div class="slide active" id="slide1">
+        <div class="slide-container flex" style="background-color: #0a3d62;">
+            <div class="accent-bar"></div>
+            <div class="content-wrapper flex flex-col w-full" style="padding: 4vh 4vw;">
+                <div class="mb-2">
+                    <span class="course-badge">
+                        <p class="text-white font-semibold" style="font-size: clamp(11px, 1.2vw, 14px);">MSc Intelligent Computing Systems – Leadership Seminar</p>
+                    </span>
+                </div>
+                <div class="mt-4 mb-3">
+                    <h1 class="title font-bold leading-tight" style="color: white;">Leadership Analysis: Sankofa Digital Solutions</h1>
+                </div>
+                <div class="mb-6">
+                    <h2 class="subtitle font-light">PROSIT on Goleman's Leadership That Gets Results (2000)</h2>
+                </div>
+                <div class="objective-box p-4 mt-4 mb-6" style="max-width: 90%;">
+                    <p class="text-white">Objective: Diagnose SDS's leadership issues, climate impacts, EI gaps, and propose a 90-day intervention to deliver Insights 4.0.</p>
+                </div>
+                <div class="mt-auto">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="footer-text mb-1" style="font-size: clamp(14px, 1.8vw, 18px);">Team 2</p>
+                            <p class="footer-text mb-1" style="font-size: clamp(12px, 1.5vw, 16px);">Thomas Kojo Quarshie | Betty Odaako Blankson</p>
+                            <p class="footer-text mb-1" style="font-size: clamp(12px, 1.5vw, 16px);">Chelsea Maame Abena Pokuaah Owusu</p>
+                            <p class="footer-text mb-1" style="font-size: clamp(12px, 1.5vw, 16px);">Innocent Farai Chikwanda | Nana Sam Yeboah</p>
+                            <p class="footer-text mt-2" style="font-size: clamp(11px, 1.2vw, 14px);">Date: November 2024</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 2: Case Overview -->
+    <div class="slide" id="slide2">
+        <div class="slide-container flex flex-col">
+            <div class="header-accent w-full"></div>
+            <div class="content-wrapper flex flex-col w-full" style="padding: 3vh 3vw;">
+                <div class="mb-4">
+                    <h1 class="title font-bold">SDS Case Overview: Who We Are and What's Wrong</h1>
+                </div>
+                <div class="flex flex-1 gap-4" style="flex-wrap: wrap;">
+                    <div class="flex flex-col" style="width: 48%; min-width: 300px;">
+                        <div class="mb-3">
+                            <h2 class="section-title font-semibold mb-2">Company Profile</h2>
+                            <div class="company-box">
+                                <p class="mb-2"><span class="font-bold">SDS:</span> Ghanaian leader in digital government platforms and AI analytics across West Africa.</p>
+                                <p>Known for technical expertise, organizational agility, and client-focused innovation over the last decade.</p>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <h2 class="section-title font-semibold mb-2">The Trigger</h2>
+                            <div class="trigger-box">
+                                <p class="mb-2"><span class="font-bold">Sankofa Insights 4.0</span> significantly delayed</p>
+                                <p class="mb-2">Advanced analytics suite for high-profile public sector agencies</p>
+                                <p>Board pressure emphasizing speed over strategic clarity</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h2 class="section-title font-semibold mb-2">Core Issue</h2>
+                            <div class="core-issue-box rounded">
+                                <p class="font-bold mb-1">Not technical capacity — leadership behaviors</p>
+                                <p>Leadership styles and emotional intelligence deficits harming organizational climate and performance outcomes (Goleman, 2017).</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="width: 48%; min-width: 300px;">
+                        <h2 class="section-title font-semibold mb-3">Key Symptoms</h2>
+                        <div class="bg-gray-50 p-4 rounded shadow-sm">
+                            <div class="mb-3">
+                                <p class="font-semibold mb-2">Organizational Structure</p>
+                                <div class="symptoms-item mb-2">
+                                    <p>• Strategic ambiguity; unclear vision for Insights 4.0</p>
+                                </div>
+                                <div class="symptoms-item mb-2">
+                                    <p>• Unclear roles and responsibilities across departments</p>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <p class="font-semibold mb-2">Team Dynamics</p>
+                                <div class="symptoms-item mb-2">
+                                    <p>• Inconsistent expectations between departments</p>
+                                </div>
+                                <div class="symptoms-item mb-2">
+                                    <p>• Low psychological safety; fear of reprimand</p>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="font-semibold mb-2">Staff Experience</p>
+                                <div class="symptoms-item mb-2">
+                                    <p>• Engineers hesitate to experiment; fear mistakes</p>
+                                </div>
+                                <div class="symptoms-item mb-2">
+                                    <p>• Data scientists overwhelmed by unrealistic expectations</p>
+                                </div>
+                                <div class="symptoms-item">
+                                    <p>• Designers excluded from decision-making processes</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Leadership Diagnosis -->
+    <div class="slide" id="slide3">
+        <div class="slide-container flex flex-col">
+            <div class="header-accent w-full"></div>
+            <div class="content-wrapper flex flex-col w-full" style="padding: 3vh 3vw;">
+                <div class="mb-4">
+                    <h1 class="title font-bold">Leadership Diagnosis: Dominant Styles at SDS (with Evidence)</h1>
+                </div>
+                <div class="grid grid-cols-2 gap-4" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+                    <!-- CEO Card -->
+                    <div class="leadership-card coercive bg-white">
+                        <div class="card-header coercive">
+                            <div class="flex items-center">
+                                <div class="mr-3">
+                                    <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center">
+                                        <span class="font-bold coercive-text" style="font-size: clamp(16px, 2vw, 24px);">CEO</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h2 class="font-bold text-gray-800">CEO</h2>
+                                    <p class="text-gray-600">Coercive (Directive/Pressure)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="evidence-item">
+                                <p><span class="font-semibold coercive-text">"</span>Deadline-centered approach...demand fast results<span class="font-semibold coercive-text">"</span></p>
+                            </div>
+                            <div class="evidence-item">
+                                <p>Engineers <span class="font-semibold coercive-text">"</span>hesitate to experiment out of fear of reprimand<span class="font-semibold coercive-text">"</span></p>
+                            </div>
+                            <div class="evidence-item">
+                                <p>Data scientists express burnout from <span class="font-semibold coercive-text">"</span>unrealistic expectations<span class="font-semibold coercive-text">"</span></p>
+                            </div>
+                            <div class="evidence-item">
+                                <p>Most staff lack understanding of overarching vision</p>
+                            </div>
+                            <p class="mt-3 italic text-gray-600">Impact: Fear culture, reduced innovation, unclear direction (Goleman, 2017)</p>
+                        </div>
+                    </div>
+                    <!-- CTO Card -->
+                    <div class="leadership-card pacesetting bg-white">
+                        <div class="card-header pacesetting">
+                            <div class="flex items-center">
+                                <div class="mr-3">
+                                    <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center">
+                                        <span class="font-bold pacesetting-text" style="font-size: clamp(16px, 2vw, 24px);">CTO</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h2 class="font-bold text-gray-800">CTO</h2>
+                                    <p class="text-gray-600">Pacesetting + Micromanagement</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="evidence-item">
+                                <p><span class="font-semibold pacesetting-text">"</span>Takes on technical work himself to maintain speed<span class="font-semibold pacesetting-text">"</span></p>
+                            </div>
+                            <div class="evidence-item">
+                                <p><span class="font-semibold pacesetting-text">"</span>Constant reprioritization<span class="font-semibold pacesetting-text">"</span> causing burnout among data scientists</p>
+                            </div>
+                            <div class="evidence-item">
+                                <p>Micromanagement <span class="font-semibold pacesetting-text">"</span>undermines team autonomy<span class="font-semibold pacesetting-text">"</span></p>
+                            </div>
+                            <div class="evidence-item">
+                                <p>Absence of <span class="font-semibold pacesetting-text">"</span>mentoring and coaching despite evolving technical requirements<span class="font-semibold pacesetting-text">"</span></p>
+                            </div>
+                            <p class="mt-3 italic text-gray-600">Impact: Autonomy loss, burnout, shifting priorities (Goleman, 2017)</p>
+                        </div>
+                    </div>
+                    <!-- HR Card -->
+                    <div class="leadership-card democratic bg-white">
+                        <div class="card-header democratic">
+                            <div class="flex items-center">
+                                <div class="mr-3">
+                                    <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center">
+                                        <span class="font-bold democratic-text" style="font-size: clamp(16px, 2vw, 24px);">HR</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h2 class="font-bold text-gray-800">HR Director</h2>
+                                    <p class="text-gray-600">Democratic (Overused)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="evidence-item">
+                                <p><span class="font-semibold democratic-text">"</span>Relies heavily on democratic decision-making<span class="font-semibold democratic-text">"</span></p>
+                            </div>
+                            <div class="evidence-item">
+                                <p>Leads to <span class="font-semibold democratic-text">"</span>prolonged discussions and slow execution<span class="font-semibold democratic-text">"</span></p>
+                            </div>
+                            <div class="evidence-item">
+                                <p>Designers report <span class="font-semibold democratic-text">"</span>feeling excluded from decision-making<span class="font-semibold democratic-text">"</span> despite stated democratic process</p>
+                            </div>
+                            <div class="evidence-item">
+                                <p>Coordination between departments has weakened</p>
+                            </div>
+                            <p class="mt-3 italic text-gray-600">Impact: Decision delays, limited execution speed, inconsistent inclusion (Goleman, 2017)</p>
+                        </div>
+                    </div>
+                    <!-- Innovation Lead Card -->
+                    <div class="leadership-card affiliative bg-white">
+                        <div class="card-header affiliative">
+                            <div class="flex items-center">
+                                <div class="mr-3">
+                                    <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center">
+                                        <span class="font-bold affiliative-text" style="font-size: clamp(16px, 2vw, 24px);">IL</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h2 class="font-bold text-gray-800">Innovation Lead</h2>
+                                    <p class="text-gray-600">Affiliative (Conflict-Avoidant)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="evidence-item">
+                                <p><span class="font-semibold affiliative-text">"</span>Prioritizes harmony but avoiding difficult conversations<span class="font-semibold affiliative-text">"</span></p>
+                            </div>
+                            <div class="evidence-item">
+                                <p><span class="font-semibold affiliative-text">"</span>Avoiding critical feedback<span class="font-semibold affiliative-text">"</span> despite performance issues</p>
+                            </div>
+                            <div class="evidence-item">
+                                <p><span class="font-semibold affiliative-text">"</span>Unresolved tension within development teams<span class="font-semibold affiliative-text">"</span> persists</p>
+                            </div>
+                            <div class="evidence-item">
+                                <p>Contradictory leadership messages across organization</p>
+                            </div>
+                            <p class="mt-3 italic text-gray-600">Impact: Unaddressed issues, performance gaps, false harmony (Goleman, 2017)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Missing Styles -->
+    <div class="slide" id="slide4">
+        <div class="slide-container flex flex-col">
+            <div class="header-accent w-full"></div>
+            <div class="content-wrapper flex flex-col w-full" style="padding: 3vh 3vw;">
+                <div class="mb-4">
+                    <h1 class="title font-bold">What's Missing: Authoritative (Visionary) and Coaching</h1>
+                </div>
+                <div class="grid grid-cols-2 gap-6" style="grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));">
+                    <div class="style-card authoritative bg-white">
+                        <div class="card-header authoritative">
+                            <div class="flex items-center">
+                                <div class="mr-3">
+                                    <div class="w-14 h-14 rounded-full bg-white flex items-center justify-center border-2 border-blue-500">
+                                        <span class="font-bold text-blue-600" style="font-size: clamp(18px, 2.5vw, 24px);">A</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h2 class="font-bold text-gray-800">Authoritative (Visionary)</h2>
+                                    <p class="text-gray-600">"Come with me" approach</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <div>
+                                <p class="font-semibold mb-2">Why SDS needs this now:</p>
+                                <p class="mb-4">Engineers cite "inconsistent direction and shifting priorities." The current leadership vacuum leaves teams without a clear North Star or stable roadmap for Insights 4.0.</p>
+                            </div>
+                            <div class="divider authoritative"></div>
+                            <div class="mb-3">
+                                <p class="font-semibold mb-2">Key benefits for SDS:</p>
+                                <div class="benefit-item">
+                                    <p>• Provides clear North Star and alignment across teams</p>
+                                </div>
+                                <div class="benefit-item">
+                                    <p>• Converts pressure into purpose; stabilizes priorities</p>
+                                </div>
+                                <div class="benefit-item">
+                                    <p>• Increases clarity and commitment during final development</p>
+                                </div>
+                                <div class="benefit-item">
+                                    <p>• Allows flexibility in execution while maintaining direction</p>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="font-semibold mb-2">Impact on climate drivers:</p>
+                                <div class="flex flex-wrap">
+                                    <span class="effect-badge authoritative">Clarity ↑↑</span>
+                                    <span class="effect-badge authoritative">Commitment ↑↑</span>
+                                    <span class="effect-badge authoritative">Flexibility ↑</span>
+                                    <span class="effect-badge authoritative">Standards ↑</span>
+                                </div>
+                                <p class="italic text-gray-500 mt-2">(Goleman, 2017)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="style-card coaching bg-white">
+                        <div class="card-header coaching">
+                            <div class="flex items-center">
+                                <div class="mr-3">
+                                    <div class="w-14 h-14 rounded-full bg-white flex items-center justify-center border-2 border-green-500">
+                                        <span class="font-bold text-green-600" style="font-size: clamp(18px, 2.5vw, 24px);">C</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h2 class="font-bold text-gray-800">Coaching</h2>
+                                    <p class="text-gray-600">"Try this" approach</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <div>
+                                <p class="font-semibold mb-2">Why SDS needs this now:</p>
+                                <p class="mb-4">Staff report "mentoring and coaching are absent despite evolving technical requirements." Engineers hesitate to experiment, limiting innovation and ownership.</p>
+                            </div>
+                            <div class="divider coaching"></div>
+                            <div class="mb-3">
+                                <p class="font-semibold mb-2">Key benefits for SDS:</p>
+                                <div class="benefit-item">
+                                    <p>• Builds capacity amid evolving requirements</p>
+                                </div>
+                                <div class="benefit-item">
+                                    <p>• Restores mentoring and 1:1 support</p>
+                                </div>
+                                <div class="benefit-item">
+                                    <p>• Improves autonomy, reduces burnout</p>
+                                </div>
+                                <div class="benefit-item">
+                                    <p>• Creates safe space for experimentation and growth</p>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="font-semibold mb-2">Impact on climate drivers:</p>
+                                <div class="flex flex-wrap">
+                                    <span class="effect-badge coaching">Responsibility ↑↑</span>
+                                    <span class="effect-badge coaching">Commitment ↑</span>
+                                    <span class="effect-badge coaching">Standards ↑</span>
+                                    <span class="effect-badge coaching">Flexibility ↑</span>
+                                </div>
+                                <p class="italic text-gray-500 mt-2">(Goleman, 2017)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <p class="text-center italic text-gray-600">Net effect: Replace fear and fragmentation with direction, growth, and coordinated execution</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Climate Impact -->
+    <div class="slide" id="slide5">
+        <div class="slide-container flex flex-col">
+            <div class="header-accent w-full"></div>
+            <div class="content-wrapper flex flex-col w-full" style="padding: 2vh 2vw;">
+                <div class="mb-3">
+                    <h1 class="title font-bold">Climate Impact: How Current Styles Affect Goleman's Drivers</h1>
+                    <p class="text-gray-600">Current leadership behaviors create significant negative pressure on organizational climate (Goleman, 2017)</p>
+                </div>
+                <div class="overflow-x-auto" style="flex: 1; max-height: 70vh;">
+                    <table class="climate-matrix">
+                        <thead>
+                            <tr>
+                                <th class="style-header"></th>
+                                <th class="matrix-header">Flexibility</th>
+                                <th class="matrix-header">Responsibility</th>
+                                <th class="matrix-header">Standards</th>
+                                <th class="matrix-header">Rewards</th>
+                                <th class="matrix-header">Clarity</th>
+                                <th class="matrix-header">Commitment</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="style-header coercive">Coercive CEO<br/><span class="text-xs font-normal">Demands & Deadlines</span></td>
+                                <td class="impact-cell bg-red-50"><div class="impact-indicator negative-high">↓↓</div><p class="impact-text">Engineers "hesitate to experiment" due to fear; innovation stifled</p></td>
+                                <td class="impact-cell bg-red-50"><div class="impact-indicator negative-high">↓↓</div><p class="impact-text">Staff shifts from proactive decision-making to avoiding error</p></td>
+                                <td class="impact-cell bg-yellow-50"><div class="impact-indicator distorted">⚠</div><p class="impact-text">Creates distorted standards focused on speed over quality</p></td>
+                                <td class="impact-cell bg-red-50"><div class="impact-indicator negative-high">↓↓</div><p class="impact-text">Emphasis on compliance rather than recognition</p></td>
+                                <td class="impact-cell bg-red-50"><div class="impact-indicator negative-high">↓</div><p class="impact-text">"Most staff lack understanding of overarching vision"</p></td>
+                                <td class="impact-cell bg-red-50"><div class="impact-indicator negative-high">↓↓</div><p class="impact-text">Psychological safety collapses; emotional disengagement</p></td>
+                            </tr>
+                            <tr>
+                                <td class="style-header pacesetting">Pacesetting CTO<br/><span class="text-xs font-normal">Speed & Control</span></td>
+                                <td class="impact-cell bg-orange-50"><div class="impact-indicator negative-medium">↓↓</div><p class="impact-text">Taking over technical work eliminates team exploration</p></td>
+                                <td class="impact-cell bg-orange-50"><div class="impact-indicator negative-medium">↓↓</div><p class="impact-text">Micromanagement removes autonomy; tasks taken away</p></td>
+                                <td class="impact-cell bg-yellow-50"><div class="impact-indicator distorted">⚠</div><p class="impact-text">"Unrealistic expectations" without support</p></td>
+                                <td class="impact-cell bg-orange-50"><div class="impact-indicator negative-medium">↓</div><p class="impact-text">Minimal recognition; assumes competence</p></td>
+                                <td class="impact-cell bg-orange-50"><div class="impact-indicator negative-medium">↓↓</div><p class="impact-text">"Inconsistent expectations"; "unclear workflows"</p></td>
+                                <td class="impact-cell bg-orange-50"><div class="impact-indicator negative-medium">↓↓</div><p class="impact-text">Burnout and pressure reduce engagement</p></td>
+                            </tr>
+                            <tr>
+                                <td class="style-header democratic">Democratic HR<br/><span class="text-xs font-normal">Overused Process</span></td>
+                                <td class="impact-cell bg-yellow-50"><div class="impact-indicator negative-low">↓</div><p class="impact-text">Initial flexibility, but "prolonged discussions" create hurdles</p></td>
+                                <td class="impact-cell bg-yellow-50"><div class="impact-indicator negative-low">↓</div><p class="impact-text">Initial high responsibility, but endless discussions create confusion</p></td>
+                                <td class="impact-cell bg-yellow-50"><div class="impact-indicator negative-low">↓</div><p class="impact-text">Consensus focus may dilute challenging goals</p></td>
+                                <td class="impact-cell bg-gray-50"><div class="impact-indicator neutral">-</div><p class="impact-text">Limited impact on reward systems</p></td>
+                                <td class="impact-cell bg-orange-50"><div class="impact-indicator negative-medium">↓↓</div><p class="impact-text">"Slow execution"; unclear decision rights</p></td>
+                                <td class="impact-cell bg-yellow-50"><div class="impact-indicator negative-low">↓</div><p class="impact-text">Initial commitment high; drops when discussions fail</p></td>
+                            </tr>
+                            <tr>
+                                <td class="style-header affiliative">Affiliative Innovation<br/><span class="text-xs font-normal">Conflict-Avoidant</span></td>
+                                <td class="impact-cell bg-gray-50"><div class="impact-indicator neutral">-</div><p class="impact-text">Minimal restriction on flexibility; allows room without guidance</p></td>
+                                <td class="impact-cell bg-orange-50"><div class="impact-indicator negative-medium">↓</div><p class="impact-text">"Avoids difficult conversations"; reduces ownership</p></td>
+                                <td class="impact-cell bg-orange-50"><div class="impact-indicator negative-medium">↓↓</div><p class="impact-text">Avoids "critical feedback"; standards erode</p></td>
+                                <td class="impact-cell bg-yellow-50"><div class="impact-indicator distorted">⚠</div><p class="impact-text">Ample positive feedback but disconnected from performance</p></td>
+                                <td class="impact-cell bg-orange-50"><div class="impact-indicator negative-medium">↓↓</div><p class="impact-text">No clear direction; lack of constructive feedback</p></td>
+                                <td class="impact-cell bg-orange-50"><div class="impact-indicator negative-medium">↓</div><p class="impact-text">"Unresolved tension within teams"; surface harmony</p></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-3 flex items-center justify-center flex-wrap">
+                    <div class="legend-item"><span class="legend-icon negative-high">↓↓</span><p class="text-xs">Severely Negative</p></div>
+                    <div class="legend-item"><span class="legend-icon negative-medium">↓</span><p class="text-xs">Moderately Negative</p></div>
+                    <div class="legend-item"><span class="legend-icon distorted">⚠</span><p class="text-xs">Distorted Effect</p></div>
+                    <div class="legend-item"><span class="legend-icon neutral">-</span><p class="text-xs">Minimal Impact</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Outcomes -->
+    <div class="slide" id="slide6">
+        <div class="slide-container flex flex-col">
+            <div class="header-accent w-full"></div>
+            <div class="content-wrapper flex flex-col w-full" style="padding: 3vh 3vw;">
+                <div class="mb-4">
+                    <h1 class="title font-bold">Climate Deterioration → Organizational Outcomes</h1>
+                </div>
+                <div class="grid grid-cols-3 gap-4" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+                    <div class="outcome-card delays bg-white">
+                        <div class="card-header delays">
+                            <h2 class="font-bold text-gray-800">Delays in Insights 4.0</h2>
+                        </div>
+                        <div class="p-4">
+                            <p class="font-semibold mb-2">Contributing Factors:</p>
+                            <ul class="list-disc list-inside mb-3 space-y-1">
+                                <li>Low Flexibility (from prolonged meetings)</li>
+                                <li>Low Standards (from uncorrected performance)</li>
+                            </ul>
+                            <p class="font-semibold mb-2">Leadership Failure:</p>
+                            <p class="mb-2">Overuse of Democratic Style and Affiliative Style</p>
+                            <p class="italic text-gray-600">Evidence: Engineers hesitate to experiment; constant reprioritization (Goleman, 2017)</p>
+                        </div>
+                    </div>
+                    <div class="outcome-card morale bg-white">
+                        <div class="card-header morale">
+                            <h2 class="font-bold text-gray-800">Morale Issues</h2>
+                        </div>
+                        <div class="p-4">
+                            <p class="font-semibold mb-2">Contributing Factors:</p>
+                            <ul class="list-disc list-inside mb-3 space-y-1">
+                                <li>Low Rewards (gap between praise and reality)</li>
+                                <li>Low Responsibility & Commitment</li>
+                            </ul>
+                            <p class="font-semibold mb-2">Leadership Failure:</p>
+                            <p class="mb-2">Overuse of Affiliative Style</p>
+                            <p class="italic text-gray-600">Evidence: Data scientists express burnout; staff morale deteriorated (Goleman, 2017)</p>
+                        </div>
+                    </div>
+                    <div class="outcome-card coordination bg-white">
+                        <div class="card-header coordination">
+                            <h2 class="font-bold text-gray-800">Poor Coordination</h2>
+                        </div>
+                        <div class="p-4">
+                            <p class="font-semibold mb-2">Contributing Factors:</p>
+                            <ul class="list-disc list-inside mb-3 space-y-1">
+                                <li>Low Clarity (confusion, no directives)</li>
+                                <li>Low Responsibility (no corrective alignment)</li>
+                            </ul>
+                            <p class="font-semibold mb-2">Leadership Failure:</p>
+                            <p class="mb-2">Overuse of Democratic and Affiliative Styles</p>
+                            <p class="italic text-gray-600">Evidence: Coordination between departments weakened; unclear roles (Goleman, 2017)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: EI Gaps -->
+    <div class="slide" id="slide7">
+        <div class="slide-container flex flex-col">
+            <div class="header-accent w-full"></div>
+            <div class="content-wrapper flex flex-col w-full" style="padding: 3vh 3vw;">
+                <div class="mb-4">
+                    <h1 class="title font-bold">Emotional Intelligence Deficits</h1>
+                </div>
+                <div class="grid grid-cols-3 gap-4" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+                    <div class="ei-card social bg-white">
+                        <div class="card-header social">
+                            <h2 class="font-bold text-gray-800">Social Skills Deficiency</h2>
+                        </div>
+                        <div class="p-4">
+                            <p class="mb-3">HR & Innovation Lead avoid conflicts; poor communication & coordination.</p>
+                            <p class="font-semibold mb-2">Need:</p>
+                            <p class="mb-3">Conflict management capabilities, clear messaging, and effective facilitation.</p>
+                            <p class="font-semibold mb-2">Impact:</p>
+                            <p class="italic text-gray-600">Prevents effective leadership style adaptation and coordination, exacerbating organizational problems (Goleman, 2017).</p>
+                        </div>
+                    </div>
+                    <div class="ei-card self-management bg-white">
+                        <div class="card-header self-management">
+                            <h2 class="font-bold text-gray-800">Self-Management Needed</h2>
+                        </div>
+                        <div class="p-4">
+                            <p class="mb-3">CTO reacts with micromanagement; CEO reacts with coercion.</p>
+                            <p class="font-semibold mb-2">Need:</p>
+                            <p class="mb-3">Strategic response vs. reaction, emotional control, and stress management.</p>
+                            <p class="font-semibold mb-2">Impact:</p>
+                            <p class="italic text-gray-600">Creates reactive, inconsistent leadership that undermines stability and prevents teams from developing effective working patterns (Goleman, 2017).</p>
+                        </div>
+                    </div>
+                    <div class="ei-card awareness bg-white">
+                        <div class="card-header awareness">
+                            <h2 class="font-bold text-gray-800">Social Awareness Required</h2>
+                        </div>
+                        <div class="p-4">
+                            <p class="mb-3">Leaders disconnected from staff needs; lack empathy for burnout & concerns.</p>
+                            <p class="font-semibold mb-2">Need:</p>
+                            <p class="mb-3">Active listening, perspective-taking, and understanding staff emotional states.</p>
+                            <p class="font-semibold mb-2">Impact:</p>
+                            <p class="italic text-gray-600">Disconnect between leadership behaviors and staff needs creates cycle of deteriorating morale and prevents building relationships necessary for collaboration (Goleman, 2017).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Recommended Mix -->
+    <div class="slide" id="slide8">
+        <div class="slide-container flex flex-col">
+            <div class="header-accent w-full"></div>
+            <div class="content-wrapper flex flex-col w-full" style="padding: 3vh 3vw;">
+                <div class="mb-4">
+                    <h1 class="title font-bold">Recommended Leadership Style Transformation</h1>
+                </div>
+                <div class="space-y-3">
+                    <div class="recommendation-box ceo">
+                        <h2 class="font-bold text-gray-800 mb-2">CEO: Authoritative + Affiliative</h2>
+                        <p class="text-gray-700 leading-relaxed">Shift away from coercive, deadline-centered approach. Acknowledge current pressures and effort invested. Re-articulate vision for SDS's aspirations, allowing executive team feedback. Develop social awareness and social skills. This de-escalates organizational pressure and creates space for candid communication about capacity and timeline adjustments (Goleman, 2017).</p>
+                    </div>
+                    <div class="recommendation-box cto">
+                        <h2 class="font-bold text-gray-800 mb-2">CTO: Authoritative + Coaching</h2>
+                        <p class="text-gray-700 leading-relaxed">Adopt authoritative approach to ensure consistent direction across Design, Data Science, and Engineering teams. Shift from doing technical work to coaching and developing team capabilities. Cultivate growth mindset. Develop self-management and social awareness. Coaching fosters employees' belief in their capacity to continuously rise to challenges (Goleman, 2017).</p>
+                    </div>
+                    <div class="recommendation-box hr">
+                        <h2 class="font-bold text-gray-800 mb-2">HR & Innovation Lead: Strengthen Social Skills</h2>
+                        <p class="text-gray-700 leading-relaxed">Rather than avoiding conflict, strengthen communication and conflict-management capabilities. Become proficient in listening, delivering clear and well-tailored messages, resolving disagreements, and facilitating solutions effectively. Clear messaging enables employees to act decisively with firm sense of purpose (Goleman, 2017).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 9: Action Plan -->
+    <div class="slide" id="slide9">
+        <div class="slide-container flex flex-col">
+            <div class="header-accent w-full"></div>
+            <div class="content-wrapper flex flex-col w-full" style="padding: 3vh 3vw;">
+                <div class="mb-4">
+                    <h1 class="title font-bold">90-Day Priority Action Plan</h1>
+                </div>
+                <div class="grid grid-cols-3 gap-4" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+                    <div class="phase-card immediate bg-white">
+                        <div class="card-header immediate">
+                            <h2 class="font-bold text-gray-800">Immediate (Days 1-30)</h2>
+                        </div>
+                        <div class="p-4">
+                            <ul class="list-disc list-inside space-y-2">
+                                <li>Emergency leadership team meeting: CEO acknowledges pressures, solicits feedback</li>
+                                <li>Executive-Board meeting to discuss company pressures and timeline adjustments</li>
+                                <li>Customer engagement to explore possible timeline adjustment</li>
+                                <li>CEO company-wide communication acknowledging pressures and outlining adjustments</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="phase-card short-term bg-white">
+                        <div class="card-header short-term">
+                            <h2 class="font-bold text-gray-800">Short-term (Days 31-60)</h2>
+                        </div>
+                        <div class="p-4">
+                            <ul class="list-disc list-inside space-y-2">
+                                <li>Internal company-climate audit led by HR Director and co-led by CEO</li>
+                                <li>Internal structural adjustments for Engineering, Data Science, and Design teams</li>
+                                <li>EI development workshops focusing on social skills, self-management, and awareness</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="phase-card mid-term bg-white">
+                        <div class="card-header mid-term">
+                            <h2 class="font-bold text-gray-800">Mid-term (Days 61-90)</h2>
+                        </div>
+                        <div class="p-4">
+                            <ul class="list-disc list-inside space-y-2">
+                                <li>Reinforce new leadership behaviors through regular check-ins</li>
+                                <li>Measure climate improvements using Goleman's climate drivers</li>
+                                <li>Celebrate progress and early wins to build momentum</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10: Expected Outcomes -->
+    <div class="slide" id="slide10">
+        <div class="slide-container flex flex-col">
+            <div class="header-accent w-full"></div>
+            <div class="content-wrapper flex flex-col w-full" style="padding: 3vh 3vw;">
+                <div class="mb-4">
+                    <h1 class="title font-bold">Expected Outcomes by Day 90</h1>
+                </div>
+                <div class="outcomes-box">
+                    <h2 class="font-bold text-gray-800 mb-4 text-center">Key Success Metrics</h2>
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-start">
+                            <span class="text-green-600 mr-3" style="font-size: clamp(18px, 2.5vw, 24px);">✓</span>
+                            <p class="text-gray-700 flex-1">Improved climate across all six drivers (flexibility, responsibility, standards, rewards, clarity, commitment)</p>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-600 mr-3" style="font-size: clamp(18px, 2.5vw, 24px);">✓</span>
+                            <p class="text-gray-700 flex-1">Accelerated progress on Insights 4.0 development milestones</p>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-600 mr-3" style="font-size: clamp(18px, 2.5vw, 24px);">✓</span>
+                            <p class="text-gray-700 flex-1">Enhanced staff morale and commitment through psychological safety restoration</p>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-600 mr-3" style="font-size: clamp(18px, 2.5vw, 24px);">✓</span>
+                            <p class="text-gray-700 flex-1">Better coordination and collaboration between departments</p>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-600 mr-3" style="font-size: clamp(18px, 2.5vw, 24px);">✓</span>
+                            <p class="text-gray-700 flex-1">Sustainable leadership practices with EI development integration</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-4 bg-blue-50 rounded">
+                        <p class="text-center font-bold text-blue-800">Key Success Factor: Executive commitment to EI development and consistent application of new leadership styles (Goleman, 2017)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11: References -->
+    <div class="slide" id="slide11">
+        <div class="slide-container flex flex-col">
+            <div class="header-accent w-full"></div>
+            <div class="content-wrapper flex flex-col w-full" style="padding: 3vh 3vw;">
+                <div class="mb-4">
+                    <h1 class="title font-bold">References</h1>
+                </div>
+                <div class="references-box">
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-gray-800 leading-relaxed">Goleman, D. (2017). Leadership that gets results. Leadership Academy NHS. https://content.leadershipacademy.nhs.uk/aspce3/files/Leadership_that_gets_results_goleman.pdf</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-800 leading-relaxed">Sterne, B. (2012, November 22). A review of Leadership that gets results by Daniel Goleman. https://brendansterne.com/2012/11/22/a-review-of-leadership-that-gets-results-by-daniel/</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-800 leading-relaxed">Harvard Business Review. (2025, October). 5 critical skills leaders need in the age of AI. https://hbr.org/2025/10/5-critical-skills-leaders-need-in-the-age-of-ai</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Navigation Controls -->
+    <div class="nav-controls">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <div class="slide-counter">
+            <span id="slideNum">1</span> / <span id="totalSlides">11</span>
+        </div>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    </div>
+</div>
+
+<script>
+let currentSlide = 1;
+const totalSlides = 11;
+
+function showSlide(n) {
+    const slides = document.getElementsByClassName('slide');
+    
+    if (n > totalSlides) {
+        currentSlide = 1;
+    }
+    if (n < 1) {
+        currentSlide = totalSlides;
+    }
+    
+    for (let i = 0; i < slides.length; i++) {
+        slides[i].classList.remove('active');
+    }
+    
+    if (slides[currentSlide - 1]) {
+        slides[currentSlide - 1].classList.add('active');
+        slides[currentSlide - 1].scrollTop = 0;
+    }
+    
+    document.getElementById('slideNum').textContent = currentSlide;
+    document.getElementById('prevBtn').disabled = currentSlide === 1;
+    document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+}
+
+function changeSlide(n) {
+    currentSlide += n;
+    showSlide(currentSlide);
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+        e.preventDefault();
+        changeSlide(1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        changeSlide(-1);
+    } else if (e.key === 'Home') {
+        e.preventDefault();
+        currentSlide = 1;
+        showSlide(currentSlide);
+    } else if (e.key === 'End') {
+        e.preventDefault();
+        currentSlide = totalSlides;
+        showSlide(currentSlide);
+    }
+});
+
+// Initialize
+showSlide(1);
+</script>
+</body>
+</html>
